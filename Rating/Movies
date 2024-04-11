@@ -1,6 +1,53 @@
 class Movie:
+    #Say what movie using title
     def __init__ (self, title):
         self.title = title
 
+    #Creates rating
+    def rate(self, rating):
+        self.rating = rating
+
+
+class RatingSystem:
+    #Create movies list for rating
+    def __init__(self):
+        self.movies = []
+
+    #Add movie to the rating movies list
+    def addMovie(self, movie):
+        self.movies.append(movie)
+
+    #Rating the movie
+    def rateMovie(self, title, rating):
+        for movie in self.movies:
+            if movie.title == title:
+                movie.rate(rating)
+                return
+        
+        
+
+#Example Movies
 movie1 = Movie("Good Will Hunting")
-print(movie1)
+movie2 = Movie("Princess Bride")
+movie3 = Movie("Shrek")
+
+#Example adding movies to rating system
+ratingsystem = RatingSystem()
+ratingsystem.addMovie(movie1)
+ratingsystem.addMovie(movie2)
+ratingsystem.addMovie(movie3)
+
+#Test
+print(movie3.title)
+    #How to see the movies inputted??
+print(ratingsystem.movies)
+
+#Example adding ratings to rating system
+ratingsystem.rateMovie("Goodwill Hunting", 100)
+ratingsystem.rateMovie("Princess Bride", 100)
+ratingsystem.rateMovie("Shrek", 70)
+
+#Test
+print(movie3.rating)
+    #How to see all ratings??
+print(ratingsystem)
