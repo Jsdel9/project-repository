@@ -1,3 +1,4 @@
+
 class Movie:
     #Say what movie using title
     def __init__ (self, title, genre):
@@ -7,8 +8,10 @@ class Movie:
 
     #Creates rating
     def rate(self, rating):
-        self.rating = rating
-
+        if 0 <= rating <= 10:
+            self.rating = rating
+        else:
+            print("Rating should be between 0 and 10.")
 
 class RatingSystem:
     #Create movies list for rating
@@ -25,6 +28,7 @@ class RatingSystem:
             if movie.title == title:
                 movie.rate(rating)
                 return
+        print("Movie not found.")
     
     #Average Rating
     def getAverage(self):
@@ -40,12 +44,21 @@ class RatingSystem:
     
     def viewRatings(self):
         for movie in self.movies:
-            print(movie.title, movie.rating)
+            #Views ratings for each movie and returns not rated if none
+            if movie.rating is not None:
+                print("{} - Rated: {}".format(movie.title, movie.rating))
+            else:
+                print("{} - Not rated yet".format(movie.title))
 
     def groupGenre(self):
         genres = {}
         #Could add way to group by genres and return that
-        
+        for movie in self.movies:
+            if movie.genre in genres:
+               genres[movie.genre].append(movie)
+            else:
+                genres[movie.genre] = [movie]
+        return genres
 
 #Example Movies
 movie1 = Movie("Good Will Hunting", "Drama")
@@ -72,13 +85,8 @@ ratingsystem.addMovie(movie8)
 ratingsystem.addMovie(movie9)
 ratingsystem.addMovie(movie10)
 
-#Test
-print(movie3.title)
-    #How to see the movies inputted??
-print(ratingsystem.movies)
-
 #Example adding ratings to rating system
-ratingsystem.rateMovie("Goodwill Hunting", 10)
+ratingsystem.rateMovie("Good Will Hunting", 10)
 ratingsystem.rateMovie("Princess Bride", 10)
 ratingsystem.rateMovie("Shrek", 6)
 ratingsystem.rateMovie("What's Eating Gilbert Grape", 8.5)
@@ -89,11 +97,18 @@ ratingsystem.rateMovie("La La Land", 8)
 ratingsystem.rateMovie("Remember the Titans", 10)
 ratingsystem.rateMovie("Ocean's Eleven", 9)
 
-#Test
-print(movie3.rating)
-    #How to see all ratings??
-print(ratingsystem.viewRatings)
+#See all ratings
+print("All Ratings:")
+ratingsystem.viewRatings()
 
-#Test
-    #Is this right? Why is it showing no movies rated??
+#See average for all movies in list
 print(f"Average Rating is: {ratingsystem.getAverage()}")
+
+#Final print sorted by genres
+
+print("\nSorted by Genre:")
+genres = ratingsystem.groupGenre()
+for genre, movies in genres.items():
+    print("\n{} Movies:".format(genre))
+    for movie in movies:
+        print("{} - Rating: {}".format(movie.title, movie.rating))
