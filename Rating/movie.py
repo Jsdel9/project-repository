@@ -1,4 +1,3 @@
-from rating_system import RatingSystem
 
 class Movie:
     #Say what movie using title
